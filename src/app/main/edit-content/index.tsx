@@ -1,5 +1,5 @@
 const EditContent = () => {
-  return <div>EditContent</div>;
+  return <div className="flex-1">EditContent</div>;
 }
 
 export default EditContent;
