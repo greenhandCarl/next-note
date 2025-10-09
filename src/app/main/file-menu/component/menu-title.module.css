@@ -1,0 +1,24 @@
+.backTitle {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  height: 30px;
+  position: relative;
+
+  .backArrow {
+    position: absolute;
+    z-index: 10;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .folderTitle {
+    font-size: 14px;
+    color: #4e5a70;
+  }
+}

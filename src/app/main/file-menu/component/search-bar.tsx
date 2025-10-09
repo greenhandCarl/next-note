@@ -1,3 +1,5 @@
+'use client'
+
 import { Input } from "antd";
 import { OrderedListOutlined } from "@ant-design/icons";
 import style from './search-bar.module.css'
