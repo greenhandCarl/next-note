@@ -12,7 +12,7 @@ type LevelKeysProps = {
 
 const items: MenuItem[] = [
   {
-    key: "2",
+    key: "0",
     icon: <FolderOpenOutlined />,
     label: "My folders",
     children: [
@@ -22,7 +22,13 @@ const items: MenuItem[] = [
         key: "23",
         label: "Interview",
         children: [
-          { key: "231", label: "Option 1" },
+          {
+            key: "231",
+            label: "Option 1",
+            children: [
+              { key: '2311', label: "Option 1 1" }
+            ]
+          },
           { key: "232", label: "Option 2" },
           { key: "233", label: "Option 3" },
         ],
@@ -60,6 +66,7 @@ const levelKeys = getLevelKeys(items as LevelKeysProps[]);
 
 const FolderMenu = () => {
   const [stateOpenKeys, setStateOpenKeys] = useState(["2"]);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([])
 
   const onOpenChange: MenuProps["onOpenChange"] = (openKeys) => {
     const currentOpenKey = openKeys.find(
@@ -91,6 +98,7 @@ const FolderMenu = () => {
       onOpenChange={onOpenChange}
       style={{ width: 208, marginTop: 22, fontSize: 13 }}
       items={items}
+      selectedKeys={selectedKeys}
     />
   );
 };

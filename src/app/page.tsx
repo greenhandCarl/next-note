@@ -1,5 +1,5 @@
-import FolderBar from '@/app/main/folder-bar'
-import FileMenu from "@/app/main/file-menu";
+import FolderBar from '@/app/main/top-folder-bar'
+import FileMenu from "@/app/main/child-menu";
 import EditContent from "@/app/main/edit-content";
 
 const Home = () => {
