@@ -3,25 +3,22 @@ import { Button } from "antd";
 import Image from "next/image";
 import style from './folder.module.css'
 import FolderMenu from "./component/folder-menu";
-import { gql, request } from 'graphql-request'
+import { request } from 'graphql-request'
+import foldersByUserQuery from './foldersByUser.graphql'
 
-const document = `query FoldersByUser($userId: ID!) {
-  foldersByUser(userId: $userId) {
-    id
-    name
-    parentId
-  }
-}`
+type FoldersByUserResponse = {
+  foldersByUser: Folder[];
+};
 
 const FolderBar = async () => {
-  const data = await request({
+  const data = await request<FoldersByUserResponse>({
     url: process.env.GRAPGQL_URL!,
-    document,
+    document: foldersByUserQuery,
     variables: {
       userId: "507f1f77bcf86cd799439011"
     }
   })
-  console.log('FolderBar data', data)
+  const items: Folder[] = data.foldersByUser || []
   return (
     <div className={style.folderBar}>
       <Image
@@ -36,7 +33,7 @@ const FolderBar = async () => {
         <PlusOutlined />
         <span>New</span>
       </Button>
-      <FolderMenu />
+      <FolderMenu items={items} />
     </div>
   );
 };
