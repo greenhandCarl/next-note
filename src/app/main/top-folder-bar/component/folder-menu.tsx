@@ -2,51 +2,18 @@
 
 import { FolderOpenOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
-import { useState } from "react";
+import { FC, useState } from "react";
+import { buildMenuItemsFromFolders } from "../utils/buildMenuItems";
 
-type MenuItem = Required<MenuProps>["items"][number];
 type LevelKeysProps = {
   key?: string;
   children?: LevelKeysProps[];
 }
+type Props = {
+  items: Folder[];
+}
 
-const items: MenuItem[] = [
-  {
-    key: "0",
-    icon: <FolderOpenOutlined />,
-    label: "My folders",
-    children: [
-      { key: "21", label: "Backend" },
-      { key: "22", label: "EnglishStudy" },
-      {
-        key: "23",
-        label: "Interview",
-        children: [
-          {
-            key: "231",
-            label: "Option 1",
-            children: [
-              { key: '2311', label: "Option 1 1" }
-            ]
-          },
-          { key: "232", label: "Option 2" },
-          { key: "233", label: "Option 3" },
-        ],
-      },
-      {
-        key: "24",
-        label: "Frontend",
-        children: [
-          { key: "241", label: "Option 1" },
-          { key: "242", label: "Option 2" },
-          { key: "243", label: "Option 3" },
-        ],
-      },
-    ],
-  },
-];
-
-const getLevelKeys = (items1: LevelKeysProps[]) => {
+const getLevelKeys = (items: LevelKeysProps[]) => {
   const key: Record<string, number> = {};
   const func = (items2: LevelKeysProps[], level = 1) => {
     items2.forEach((item) => {
@@ -58,13 +25,22 @@ const getLevelKeys = (items1: LevelKeysProps[]) => {
       }
     });
   };
-  func(items1);
+  func(items);
   return key;
 };
 
-const levelKeys = getLevelKeys(items as LevelKeysProps[]);
 
-const FolderMenu = () => {
+
+const FolderMenu: FC<Props> = ({ items }) => {
+  const menuItems: MenuItem[] = [
+    {
+      key: "0",
+      icon: <FolderOpenOutlined />,
+      label: "My folders",
+      children: buildMenuItemsFromFolders(items),
+    },
+  ];
+  const levelKeys = getLevelKeys(menuItems as LevelKeysProps[]);
   const [stateOpenKeys, setStateOpenKeys] = useState(["2"]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
 
@@ -97,7 +73,7 @@ const FolderMenu = () => {
       openKeys={stateOpenKeys}
       onOpenChange={onOpenChange}
       style={{ width: 208, marginTop: 22, fontSize: 13 }}
-      items={items}
+      items={menuItems}
       selectedKeys={selectedKeys}
     />
   );
