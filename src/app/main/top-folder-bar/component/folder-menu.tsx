@@ -4,6 +4,7 @@ import { FolderOpenOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 import { FC, useState } from "react";
 import { buildMenuItemsFromFolders } from "../utils/buildMenuItems";
+import ContextMenu from "../../client-components/ContextMenu";
 
 type LevelKeysProps = {
   key?: string;
@@ -32,17 +33,24 @@ const getLevelKeys = (items: LevelKeysProps[]) => {
 
 
 const FolderMenu: FC<Props> = ({ items }) => {
+  const [showContextMenu, setShowContextMenu] = useState(false);
+
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowContextMenu(true);
+  }
   const menuItems: MenuItem[] = [
     {
       key: "0",
       icon: <FolderOpenOutlined />,
-      label: "My folders",
+      label: <div onContextMenu={handleContextMenu}>My folders 1</div>,
       children: buildMenuItemsFromFolders(items),
     },
   ];
   const levelKeys = getLevelKeys(menuItems as LevelKeysProps[]);
   const [stateOpenKeys, setStateOpenKeys] = useState(["2"]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
+
 
   const onOpenChange: MenuProps["onOpenChange"] = (openKeys) => {
     const currentOpenKey = openKeys.find(
@@ -68,14 +76,27 @@ const FolderMenu: FC<Props> = ({ items }) => {
   };
   
   return (
-    <Menu
-      mode="inline"
-      openKeys={stateOpenKeys}
-      onOpenChange={onOpenChange}
-      style={{ width: 208, marginTop: 22, fontSize: 13 }}
-      items={menuItems}
-      selectedKeys={selectedKeys}
-    />
+    <div>
+      <Menu
+        mode="inline"
+        openKeys={stateOpenKeys}
+        onOpenChange={onOpenChange}
+        style={{ width: 208, marginTop: 22, fontSize: 13 }}
+        items={menuItems}
+        selectedKeys={selectedKeys}
+      />
+      {
+        showContextMenu && <ContextMenu
+          x={0}
+          y={0}
+          options={[
+            { label: "Option 1", action: () => console.log("Option 1 selected") },
+            { label: "Option 2", action: () => console.log("Option 2 selected") },
+          ]}
+          onClose={() => {}}
+        />
+      }
+    </div>
   );
 };
 
