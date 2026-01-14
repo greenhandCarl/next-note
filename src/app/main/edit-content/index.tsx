@@ -1,7 +1,7 @@
 // import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 import style from './index.module.css'
 import { Button } from 'antd';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import Markdown from 'markdown-to-jsx';
 // import { FolderOpenOutlined } from '@ant-design/icons';
 // import EditableBriefText from '@/components/EditableBriefText';
@@ -22,7 +22,7 @@ const Content = () => {
             </div>
         </div>
         <div className={style.content}>
-          <div className={classNames({ [style.preview]: true, [style.showPreview]: true })}>
+          <div className={clsx({ [style.preview]: true, [style.showPreview]: true })}>
             <Markdown>111</Markdown>
           </div>
         </div>

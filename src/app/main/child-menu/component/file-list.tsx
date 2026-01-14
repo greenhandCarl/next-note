@@ -1,6 +1,6 @@
 import style from './file-list.module.css'
 import { FileMarkdownFilled } from '@ant-design/icons';
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 const FileList= () => {
 
@@ -11,14 +11,14 @@ const FileList= () => {
         <div className={style.emptyText}>没有找到文件</div>
         <div className={style.newBtn} onClick={onNewClick}>新建笔记</div>
       </li> */}
-      <li className={classNames(style.item)}>
+      <li className={clsx(style.item)}>
         <div className={style.title}>
             <FileMarkdownFilled className={style.fileIcon} />
             <span className={style.titleText}>Three.js</span>
         </div>
         <div className={style.date}>2025.04.03</div>
       </li>
-      <li className={classNames(style.item)}>
+      <li className={clsx(style.item)}>
         <div className={style.title}>
             <FileMarkdownFilled className={style.fileIcon} />
             <span className={style.titleText}>Three.js</span>

@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@theme {
+  --color-line-2: #eceff4;
+}
 
 :root {
   --background: #ffffff;

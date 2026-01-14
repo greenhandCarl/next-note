@@ -4,7 +4,18 @@ import { FolderOpenOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 import { FC, useState } from "react";
 import { buildMenuItemsFromFolders } from "../utils/buildMenuItems";
-import ContextMenu from "../../client-components/ContextMenu";
+import ContextMenu from "../../client-components/context-menu";
+import createFolder from "../createFolder.graphql";
+import request from 'graphql-request'
+import { useMutation } from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
+
+type CreateFolderResponse = {
+  id: number,
+  parentId: number
+}
 
 type LevelKeysProps = {
   key?: string;
@@ -30,14 +41,30 @@ const getLevelKeys = (items: LevelKeysProps[]) => {
   return key;
 };
 
-
-
 const FolderMenu: FC<Props> = ({ items }) => {
   const [showContextMenu, setShowContextMenu] = useState(false);
+  const [mousePosition, setMousePosition] = useState<{x: number, y: number}>({x: 0, y: 0})
+
+  const mutation = useMutation({
+    mutationFn: async (parameter: { userId: string, name: string }) => {
+      return request(
+        process.env.NEXT_PUBLIC_GRAPGQL_URL!,
+        createFolder,
+        parameter
+      )
+    },
+    onError: (error, variables, onMutateResult, context) => {
+      console.log(`error`, error)
+    },
+    onSuccess: (data) => {
+      console.log('data', data)
+    },
+  })
 
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
     setShowContextMenu(true);
+    setMousePosition({x: e.pageX, y: e.pageY})
   }
   const menuItems: MenuItem[] = [
     {
@@ -74,30 +101,42 @@ const FolderMenu: FC<Props> = ({ items }) => {
       setStateOpenKeys(openKeys);
     }
   };
+
+  const addFolder = () => {
+    mutation.mutate({ userId: "507f1f77bcf86cd799439011", name: 'test' })
+  }
   
   return (
-    <div>
-      <Menu
-        mode="inline"
-        openKeys={stateOpenKeys}
-        onOpenChange={onOpenChange}
-        style={{ width: 208, marginTop: 22, fontSize: 13 }}
-        items={menuItems}
-        selectedKeys={selectedKeys}
-      />
-      {
-        showContextMenu && <ContextMenu
-          x={0}
-          y={0}
-          options={[
-            { label: "Option 1", action: () => console.log("Option 1 selected") },
-            { label: "Option 2", action: () => console.log("Option 2 selected") },
-          ]}
-          onClose={() => {}}
+      <div>
+        <Menu
+          mode="inline"
+          openKeys={stateOpenKeys}
+          onOpenChange={onOpenChange}
+          style={{ width: 208, marginTop: 22, fontSize: 13 }}
+          items={menuItems}
+          selectedKeys={selectedKeys}
         />
-      }
-    </div>
+        {
+          showContextMenu && <ContextMenu
+            x={mousePosition.x}
+            y={mousePosition.y}
+            options={[
+              { label: "New", action: () => addFolder() },
+              { label: "Delete", action: () => console.log("Option 2 selected") },
+              { label: "Rename", action: () => console.log("Option 2 selected") },
+            ]}
+            onClose={() => setShowContextMenu(false)}
+          />
+        }
+      </div>
   );
 };
 
-export default FolderMenu;
+const FolderMenuWrapper: FC<Props> = ({ items }) => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <FolderMenu items={items} />
+    </QueryClientProvider>
+  )
+}
+export default FolderMenuWrapper;
