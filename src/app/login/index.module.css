@@ -1,0 +1,157 @@
+.registryWrapper {
+  margin: 0 auto;
+
+  .registryMain {
+    display: flex;
+
+    .insetWrapper {
+      width: 515px;
+      height: 724px;
+
+      .reg {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 10;
+      }
+
+      .logo {
+        position: fixed;
+        top: -60px;
+        left: -56px;
+        z-index: 20;
+        cursor: pointer;
+      }
+    }
+
+    .registryBox {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #fff;
+      padding-bottom: 108px;
+
+      .title {
+        text-align: center;
+        padding-top: 94px;
+        padding-bottom: 20px;
+        font-size: 26px;
+        font-family: Petrona;
+      }
+
+      .googleWrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .tabs {
+
+        .tabBarList {
+          display: flex;
+          width: 370px;
+          height: 34px;
+          box-sizing: border-box;
+          border-radius: 17px;
+          background-color: #f2f0ff;
+          padding: 4px;
+
+          .barItem {
+            flex: 1;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Lustria;
+            font-size: 12px;
+            color: #808080;
+            border-radius: 13px;
+            cursor: pointer;
+
+            &.active {
+              background-color: #a69aed;
+              color: #fff;
+            }
+          }
+        }
+      }
+
+      .forgot {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        font-family: Lustria;
+        font-size: 10px;
+        color: #647CE7;
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      .tips {
+        position: relative;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 20px;
+        font-family: Lustria;
+        font-size: 10px;
+        line-height: 16px;
+        color: #808080;
+        width: 370px;
+        white-space: wrap;
+        box-sizing: border-box;
+
+        &::before {
+          content: '';
+          width: 3px;
+          height: 3px;
+          border-radius: 50%;
+          background-color: #808080;
+          position: absolute;
+          top: 27px;
+          left: 5px;
+        }
+
+        .highlight {
+          color: #647CE7;
+          cursor: pointer;
+        }
+      }
+
+      .registerBtn {
+        width: 370px;
+        height: 45px;
+        border-radius: 22px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Lustria;
+        font-size: 14px;
+        color: #808080;
+        background-color: #f2f0ff;
+
+        &.active {
+          background-color: #A69AED;
+          color: #fff;
+        }
+      }
+
+      .logTips {
+        padding-top: 20px;
+        font-family: Lustria;
+        font-size: 10px;
+        line-height: 16px;
+        color: #808080;
+        width: 370px;
+        white-space: wrap;
+        box-sizing: border-box;
+        text-align: center;
+
+        .highlight {
+          color: #647CE7;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

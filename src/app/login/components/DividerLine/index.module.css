@@ -1,0 +1,42 @@
+.dividerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #808080;
+  font-family: Lustria;
+  font-size: 12px;
+  width: 370px;
+  padding: 34px 0;
+
+  .pointWrapperL {
+    display: flex;
+
+    .point {
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      background-color: #808080;
+      margin-right: 6px;
+
+      &:nth-last-of-type(1) {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .pointWrapperR {
+    display: flex;
+
+    .point {
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      background-color: #808080;
+      margin-left: 6px;
+
+      &:nth-of-type(1) {
+        margin-left: 0;
+      }
+    }
+  }
+}
